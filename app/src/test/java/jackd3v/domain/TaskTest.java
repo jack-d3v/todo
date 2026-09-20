@@ -31,4 +31,22 @@ class TaskTest {
         assertEquals(Status.CLOSED, task.getStatus());
     }
 
+    @Test
+    void activateAfterCloseClearsClosedAt() {
+        Task task = new Task("foo");
+        task.close();
+        task.activate();
+        assertNull(task.getClosedAt());
+        assertEquals(Status.ACTIVE, task.getStatus());
+    }
+
+    @Test
+    void parkAfterCloseClearsClosedAt() {
+        Task task = new Task("Foo");
+        task.close();
+        task.park();
+        assertNull(task.getClosedAt());
+        assertEquals(Status.PARKED, task.getStatus());
+    }
+
 }

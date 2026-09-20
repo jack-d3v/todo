@@ -9,7 +9,7 @@ public class Task {
     private Status status;
     private Instant closedAt;
 
-    public Task(String content) throws IllegalArgumentException, NullPointerException {
+    public Task(String content) {
         if (content == null)
             throw new NullPointerException();
         if (content.isBlank())
@@ -31,13 +31,23 @@ public class Task {
         this.closedAt = now;
     }
 
-    public void setStatus(Status status) {
+    private void setStatus(Status status) {
         this.status = status;
     }
 
     public void close() {
         this.setStatus(Status.CLOSED);
         this.setClosedAt(Instant.now());
+    }
+
+    public void activate() {
+        this.setStatus(Status.ACTIVE);
+        this.setClosedAt(null);
+    }
+
+    public void park() {
+        this.setStatus(Status.PARKED);
+        this.setClosedAt(null);
     }
 
 }
