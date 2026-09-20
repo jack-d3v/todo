@@ -3,9 +3,17 @@ package jackd3v.domain;
 import java.time.Instant;
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+
+@Entity
 public class Task {
+    @Id
     private UUID id;
     private String content;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private Instant closedAt;
 
@@ -19,12 +27,23 @@ public class Task {
         this.status = Status.ACTIVE;
     }
 
+    protected Task() {
+    }
+
     public Status getStatus() {
         return this.status;
     }
 
     public Instant getClosedAt() {
         return this.closedAt;
+    }
+
+    public UUID getID() {
+        return this.id;
+    }
+
+    public String getContent() {
+        return this.content;
     }
 
     private void setClosedAt(Instant now) {
