@@ -63,4 +63,17 @@ public class TaskPersistenceTest {
         assertTrue(ids.contains(task1.getID()));
         assertTrue(ids.contains(task2.getID()));
     }
+
+    @Test
+    void updateTaskDetailsPersist() {
+        Task task = new Task("foo");
+        repository.save(task);
+        task.close();
+        task.reword("bar");
+        repository.update(task);
+        Optional<Task> retrievedTask = repository.findById(task.getID());
+        assertEquals("bar", retrievedTask.orElseThrow().getContent());
+        assertEquals(Status.CLOSED, retrievedTask.orElseThrow().getStatus());
+        assertNotNull(retrievedTask.orElseThrow().getClosedAt());
+    }
 }

@@ -31,4 +31,9 @@ public class HibernateTaskRepository implements TaskRepository {
     public List<Task> findAll() {
         return sessionFactory.fromTransaction(session -> session.createQuery("from Task", Task.class).getResultList());
     }
+
+    @Override
+    public void update(Task task) {
+        sessionFactory.inTransaction(session -> session.merge(task));
+    }
 }
