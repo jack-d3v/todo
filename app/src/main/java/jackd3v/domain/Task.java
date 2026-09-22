@@ -54,6 +54,14 @@ public class Task {
         this.status = status;
     }
 
+    public void reword(String content) {
+        if (content == null)
+            throw new NullPointerException();
+        if (content.isBlank())
+            throw new IllegalArgumentException();
+        this.content = content;
+    }
+
     public void close() {
         this.setStatus(Status.CLOSED);
         this.setClosedAt(Instant.now());

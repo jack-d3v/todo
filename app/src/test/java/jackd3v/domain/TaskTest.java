@@ -49,4 +49,28 @@ class TaskTest {
         assertEquals(Status.PARKED, task.getStatus());
     }
 
+    @Test
+    void rewordNullThrows() {
+        Task task = new Task("foo");
+        assertThrows(NullPointerException.class, () -> task.reword(null));
+    }
+
+    @Test
+    void rewordEmptyThrows() {
+        Task task = new Task("foo");
+        assertThrows(IllegalArgumentException.class, () -> task.reword(""));
+    }
+
+    @Test
+    void rewordWhitespaceThrows() {
+        Task task = new Task("foo");
+        assertThrows(IllegalArgumentException.class, () -> task.reword("   "));
+    }
+
+    @Test
+    void rewordChangesContent() {
+        Task task = new Task("foo");
+        task.reword("bar");
+        assertEquals("bar", task.getContent());
+    }
 }
