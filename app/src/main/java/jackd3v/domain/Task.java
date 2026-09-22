@@ -1,6 +1,7 @@
 package jackd3v.domain;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -18,10 +19,7 @@ public class Task {
     private Instant closedAt;
 
     public Task(String content) {
-        if (content == null)
-            throw new NullPointerException();
-        if (content.isBlank())
-            throw new IllegalArgumentException();
+        requireValidContent(content);
         this.id = UUID.randomUUID();
         this.content = content;
         this.status = Status.ACTIVE;
@@ -54,11 +52,14 @@ public class Task {
         this.status = status;
     }
 
-    public void reword(String content) {
-        if (content == null)
-            throw new NullPointerException();
+    private static void requireValidContent(String content) {
+        Objects.requireNonNull(content);
         if (content.isBlank())
             throw new IllegalArgumentException();
+    }
+
+    public void reword(String content) {
+        requireValidContent(content);
         this.content = content;
     }
 
