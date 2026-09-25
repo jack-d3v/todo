@@ -12,18 +12,20 @@ dependencies {
 
     implementation("org.hibernate.orm:hibernate-core:7.4.7.Final")
     implementation("com.h2database:h2:2.4.240")
-    implementation("org.jline:jline:3.26.3")
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(26)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 application {
     mainClass = "jackd3v.App"
-    applicationDefaultJvmArgs = listOf("--enable-native-access=ALL-UNNAMED")
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 tasks.named<Test>("test") {
